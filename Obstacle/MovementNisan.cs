@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//Movement prefab nisan
+//Movement nisan
 public class MovementNisan : movement{
 
 	void Start () {

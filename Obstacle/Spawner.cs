@@ -28,7 +28,7 @@ public class Spawner : MonoBehaviour {
 	public void SpawnObstacle(){
 		spawnedObstacle = Instantiate (obstacle[Random.Range(0, obstacle.Length)], transform.position, transform.rotation) as GameObject;
 		spawnedObstacle.name = "obs";
-		//Prefab parentnya nanti dikasih tag "Obstacle"
+		//Parentnya nanti dikasih tag "Obstacle"
 		spawnedObstacle.transform.parent = GameObject.FindGameObjectWithTag("Obstacle").transform; 
 		spawnedObstacle.transform.position = GameObject.FindGameObjectWithTag ("Obstacle").transform.position;
 	}
