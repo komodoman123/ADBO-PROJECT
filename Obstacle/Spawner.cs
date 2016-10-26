@@ -1,35 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawner : MonoBehaviour {
+public abstract class Spawner : MonoBehaviour {
 
 	public GameObject[] obstacleDay;
 	public GameObject[] obstacleNight;
-	//Transisi siang malemnya nanti gimana?
-	public GameObject[] obstacle;
+	protected GameObject[] obstacle;
 	public bool isNight;
-	public GameObject spawnedObstacle;
-	//Kalo buat ngespawn dua obstacle urang ga tau
+	protected GameObject spawnedObstacle;
+	float spawnTimer;
+	//Masih nyari cara supaya ga ada nisan + burung sekaligus
+	//Ato mau bisa ada nisan + burung sekaligus aja biar gelo?
 
-	Spawner(){
+	/*Spawner(){
 		this.obstacleDay = new GameObject[10];
 		this.obstacleNight = new GameObject[10];
+	}*/
+
+	void Start(){
+		this.spawnTimer = Random.Range(0.5f,1f);
+	}
+
+	protected void SpawnObstacle(){
+		spawnedObstacle = Instantiate (obstacle [0], transform.position, transform.rotation) as GameObject;
+		spawnedObstacle.name = "obs";
+		spawnedObstacle.transform.position = this.transform.position;
+	}
+
+	protected void FixedUpdate(){
+		spawnTimer -= Time.deltaTime;
+		if (spawnTimer <= 0) {
+			this.SpawnObstacle ();
+			spawnTimer = Random.Range(0.5f, 1f);
+		}
+	}
+	protected void setObstacle(){
 		if (isNight) {
 			obstacle = obstacleNight;
 		} else {
 			obstacle = obstacleDay;
 		}
-	}
-
-	void Start(){
-		this.SpawnObstacle ();
-	}
-
-	public void SpawnObstacle(){
-		spawnedObstacle = Instantiate (obstacle[Random.Range(0, obstacle.Length)], transform.position, transform.rotation) as GameObject;
-		spawnedObstacle.name = "obs";
-		//Parentnya nanti dikasih tag "Obstacle"
-		spawnedObstacle.transform.parent = GameObject.FindGameObjectWithTag("Obstacle").transform; 
-		spawnedObstacle.transform.position = GameObject.FindGameObjectWithTag ("Obstacle").transform.position;
 	}
 }
